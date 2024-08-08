@@ -49,7 +49,7 @@ const ItemList: React.FC<ItemListProps> = ({
         loadNextPage();
       }
     } else if (scrollTop <= 5 && currentPage > 1 && !loading) {
-      if (!cache.has(currentPage - 1)) {
+      if (!cache.has(currentPage - 1)){
         setLoading(true);
         loadPrevPage();
       }
@@ -58,7 +58,7 @@ const ItemList: React.FC<ItemListProps> = ({
     let newPage: number | null = null;
     for (let i = 0; i < pageOffsets.current.length; i++) {
       if (scrollTop < pageOffsets.current[i] + container.clientHeight / 2) {
-        newPage = i + 1; // Adjusting to be one-based index
+        newPage = i + 1; 
         break;
       }
     }
@@ -68,7 +68,7 @@ const ItemList: React.FC<ItemListProps> = ({
     }
 
     previousScrollTop.current = scrollTop;
-  }, [
+  }, [   // dependency
     loading,
     loadNextPage,
     loadPrevPage,
@@ -85,7 +85,7 @@ const ItemList: React.FC<ItemListProps> = ({
       setDisableScroll(true);
       const newPageOffset = pageOffsets.current[currentPage - 1];
       if (newPageOffset !== undefined) {
-        container.scrollTop = newPageOffset - 50;
+        container.scrollTop = newPageOffset +20;
       }
       setPageChange(false);
       setTimeout(() => {
@@ -113,11 +113,11 @@ const ItemList: React.FC<ItemListProps> = ({
       pageOffsets.current = newPageOffsets;
 
       container.scrollTo({
-        top: ,
+        top:  previousScrollTop.current
       });
       console.log(pageOffsets);
     }
-  }, [listData, itemsPerPage]);
+ }, [listData, itemsPerPage] );
 
   // Simulate loading state
   useEffect(() => {
@@ -156,17 +156,16 @@ const ItemList: React.FC<ItemListProps> = ({
     if (container) {
       container.addEventListener("scroll", handleScroll);
       return () => {
-        container.removeEventListener("scroll", handleScroll);
+      container.removeEventListener("scroll", handleScroll);
       };
     }
   }, [handleScroll]);
 
+ 
   return (
     <ul className="item-list" ref={containerRef}>
       {listData.map((item) => (
-        <li key={item.id} className="item-list-item">
-          {item.title}
-        </li>
+       <li key={item.id}  className="item-list-item">{item.title}</li>
       ))}
       {loading && <li className="loading-indicator">Loading...</li>}
     </ul>

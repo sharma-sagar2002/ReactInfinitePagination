@@ -1,6 +1,6 @@
 export interface Data {
   id: number;
   title: string;
-  price: number;
+   price: number;
 }
 export default Data;

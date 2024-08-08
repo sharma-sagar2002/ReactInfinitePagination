@@ -41,7 +41,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 }`}
               >
                 {pageNumber + 1}
-              </button>
+             </button>
             </li>
           ))}
         </ul>

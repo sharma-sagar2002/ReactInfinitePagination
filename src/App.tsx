@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ItemList from "./components/ItemList";
+// import ItemList2 from "./components/ItemList2";
+
 import Pagination from "./components/Pagination";
 import Options from "./components/Options";
 import { Data } from "./Models/Data";
@@ -17,7 +19,6 @@ const App: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(0);
   const [data, setData] = useState<Data[]>([]);
   const [error, setError] = useState<string | null>(null);
-
   const totalData = BaseAPI.totalData;
 
   const loadNextPage = () => {
