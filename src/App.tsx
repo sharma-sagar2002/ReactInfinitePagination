@@ -30,6 +30,7 @@ const App: React.FC = () => {
     setPageChange(true);
   };
 
+  
   const loadPage = (num: number) => {
     setCurrentPage(num);
     setPageChange(true);

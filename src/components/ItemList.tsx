@@ -31,6 +31,25 @@ const ItemList: React.FC<ItemListProps> = ({
   const pageOffsets = useRef<number[]>([]);
   const previousScrollTop = useRef<number>(0);
 
+  const adjustScroll = (pages:any,scrollTop :number,scrollHeight:number,clientHeight:number,isInfiniteScroll:boolean =false)=>{
+    console.log(pages);
+    const totalPages = pages.current.length;
+   
+    const pageHeight = scrollHeight / totalPages;
+
+    let prevCurrentPage   = currentPage;
+
+    let indexOfCurrent = pages.current[prevCurrentPage-1];
+    if(containerRef.current !== null){
+      containerRef.current.scrollTop = indexOfCurrent + 20;
+
+    }
+
+
+
+
+  }
+
   const handleScroll = useCallback(() => {
     if (disableScroll) return;
 
@@ -46,12 +65,16 @@ const ItemList: React.FC<ItemListProps> = ({
     ) {
       if (!cache.has(currentPage + 1)) {
         setLoading(true);
+        
+        
         loadNextPage();
+        adjustScroll(pageOffsets,scrollTop,scrollHeight,clientHeight,true);
       }
     } else if (scrollTop <= 5 && currentPage > 1 && !loading) {
       if (!cache.has(currentPage - 1)) {
         setLoading(true);
         loadPrevPage();
+        adjustScroll(pageOffsets,scrollTop,scrollHeight,clientHeight);
       }
     }
 
@@ -84,8 +107,11 @@ const ItemList: React.FC<ItemListProps> = ({
     if (IsPageChange && container) {
       setDisableScroll(true);
       const newPageOffset = pageOffsets.current[currentPage - 1];
+      console.log(pageOffsets);
       if (newPageOffset !== undefined) {
-        container.scrollTop = newPageOffset - 50;
+       
+
+        container.scrollTop = newPageOffset + 5;
       }
       setPageChange(false);
       setTimeout(() => {
@@ -113,7 +139,7 @@ const ItemList: React.FC<ItemListProps> = ({
       pageOffsets.current = newPageOffsets;
 
       container.scrollTo({
-        top: ,
+        top: pageOffsets.current[currentPage-1],
       });
       console.log(pageOffsets);
     }
@@ -160,6 +186,9 @@ const ItemList: React.FC<ItemListProps> = ({
       };
     }
   }, [handleScroll]);
+
+
+
 
   return (
     <ul className="item-list" ref={containerRef}>
